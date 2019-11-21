@@ -1,0 +1,72 @@
+* {
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 10px;
+}
+
+body {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(rgb(57, 163, 47), rgb(48, 143, 135));
+  font-family: sans-serif;
+  color: white;
+}
+
+.weather-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+}
+
+.location {
+  height: 30vh;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  &__timezone {
+    font-size: 4rem;
+  }
+}
+
+.degree-section {
+  display: flex;
+  cursor: pointer;
+
+  &__degrees {
+    margin: 10px;
+    font-size: 8rem;
+  }
+}
+
+.temperature-degree {
+  font-size: 12rem;
+}
+
+.temperature-description {
+  font-size: 4rem;
+}
+
+.temperature-next-days {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.map-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+}

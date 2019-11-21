@@ -1,5 +1,4 @@
-(function(global) {
-  "use strict";
+"use strict";
 
   /* Set up a RequestAnimationFrame shim so we can animate efficiently FOR
    * GREAT JUSTICE. */
@@ -723,4 +722,5 @@
   };
 
   global.Skycons = Skycons;
-}(this));
+
+  export {Skycons}
