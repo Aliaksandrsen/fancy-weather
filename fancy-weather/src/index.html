@@ -9,88 +9,101 @@
 </head>
 
 <body>
+  <header class="header">
+    <div class="header__half header__half_left">
+      <button id="loadBackground">Load</button>
+      <button id="en">EN</button>
+      <button id="ru">RU</button>
+      <button id="be">BE</button>
+      <button id="F">°C / °F</button>
+    </div>
+    <div class="header__half header__half_right">
+      <button id="serch">Serch</button>
+      <input type="text">
+    </div>
+  </header>
 
-  <div class="weather">
 
+  <main class="main" id="main">
+    <div class="weather">
+      <div class="weather-card weather-card_big">
+        <h1 class="weather__timezone" id="weatherTimezone">Timezone</h1>
 
-    <div class="weather-card weather-card_big">
-      <h1 class="weather__timezone" id="weatherTimezone">Timezone</h1>
-
-      <div class="weather__about">
-        <div class="weather__about-left weather__about-left_big">
-          <div class="weather__time weather__time_big" id="weatherTime">Weekday</div>
-          <p class="weather__description" id="weatherDescreption">Its cold</p>
+        <div class="weather__about">
+          <div class="weather__about-left weather__about-left_big">
+            <div class="weather__time weather__time_big" id="weatherTime">Weekday</div>
+            <p class="weather__description" id="weatherDescreption">Its cold</p>
+          </div>
+          <canvas id="icon" class="icon_big" width="256" height="256"></canvas>
         </div>
-        <canvas id="icon" class="icon_big" width="256" height="256"></canvas>
+
+        <div class="weather__in-this-day" id="weatherToday">
+          <h2 class="degree-value degree-value_big" id="degreesValue">0</h2>
+          <span class="degree-symbol degree-symbol_big" id="degreesSymbol">°C</span>
+        </div>
       </div>
 
-      <div class="weather__in-this-day" id="weatherToday">
-        <h2 class="degree-value degree-value_big" id="degreesValue">0</h2>
-        <span class="degree-symbol degree-symbol_big" id="degreesSymbol">°C</span>
+
+
+      <div class="weather__next-days">
+
+        <div class="weather-card">
+          <div class="weather__about">
+            <div class="weather__about-left weather__about-left_small">
+              <div class="weather__time weather__time_small" id="weatherTimeFirst">Weekday</div>
+              <p class="weather__description" id="weatherDescreptionFirst">Its cold</p>
+            </div>
+            <canvas id="icon1" class="icon_big" width="64" height="64"></canvas>
+          </div>
+
+          <div class="weather__in-this-day" id="weatherFirst">
+            <h3 class="degree-value degree-value_small" id="degreesValueFirst">0</h3>
+            <span class="degree-symbol degree-symbol_small" id="degreesSymbolFirst">°C</span>
+          </div>
+        </div>
+
+
+        <div class="weather-card">
+          <div class="weather__about">
+            <div class="weather__about-left weather__about-left_small">
+              <div class="weather__time weather__time_small" id="weatherTimeSecond">Weekday</div>
+              <p class="weather__description" id="weatherDescreptionSecond">Its cold</p>
+            </div>
+            <canvas id="icon2" class="icon_big" width="64" height="64"></canvas>
+          </div>
+
+          <div class="weather__in-this-day" id="weatherSecond">
+            <h3 class="degree-value degree-value_small" id="degreesValueSecond">0</h3>
+            <span class="degree-symbol degree-symbol_small" id="degreesSymbolSecond">°C</span>
+          </div>
+        </div>
+
+
+        <div class="weather-card">
+          <div class="weather__about">
+            <div class="weather__about-left weather__about-left_small">
+              <div class="weather__time weather__time_small" id="weatherTimeThird">Weekday</div>
+              <p class="weather__description" id="weatherDescreptionThird">Its cold</p>
+            </div>
+            <canvas id="icon3" class="icon_big" width="64" height="64"></canvas>
+          </div>
+
+          <div class="weather__in-this-day" id="weatherThird">
+            <h3 class="degree-value degree-value_small" id="degreesValueThird">0</h3>
+            <span class="degree-symbol degree-symbol_small" id="degreesSymbolThird">°C</span>
+          </div>
+        </div>
+
+
       </div>
     </div>
 
 
-
-    <div class="weather__next-days">
-
-      <div class="weather-card">
-        <div class="weather__about">
-          <div class="weather__about-left weather__about-left_small">
-            <div class="weather__time weather__time_small" id="weatherTimeFirst">Weekday</div>
-            <p class="weather__description" id="weatherDescreptionFirst">Its cold</p>
-          </div>
-          <canvas id="icon1" class="icon_big" width="64" height="64"></canvas>
-        </div>
-
-        <div class="weather__in-this-day" id="weatherFirst">
-          <h3 class="degree-value degree-value_small" id="degreesValueFirst">0</h3>
-          <span class="degree-symbol degree-symbol_small" id="degreesSymbolFirst">°C</span>
-        </div>
-      </div>
-
-
-      <div class="weather-card">
-        <div class="weather__about">
-          <div class="weather__about-left weather__about-left_small">
-            <div class="weather__time weather__time_small" id="weatherTimeSecond">Weekday</div>
-            <p class="weather__description" id="weatherDescreptionSecond">Its cold</p>
-          </div>
-          <canvas id="icon2" class="icon_big" width="64" height="64"></canvas>
-        </div>
-
-        <div class="weather__in-this-day" id="weatherSecond">
-          <h3 class="degree-value degree-value_small" id="degreesValueSecond">0</h3>
-          <span class="degree-symbol degree-symbol_small" id="degreesSymbolSecond">°C</span>
-        </div>
-      </div>
-
-
-      <div class="weather-card">
-        <div class="weather__about">
-          <div class="weather__about-left weather__about-left_small">
-            <div class="weather__time weather__time_small" id="weatherTimeThird">Weekday</div>
-            <p class="weather__description" id="weatherDescreptionThird">Its cold</p>
-          </div>
-          <canvas id="icon3" class="icon_big" width="64" height="64"></canvas>
-        </div>
-
-        <div class="weather__in-this-day" id="weatherThird">
-          <h3 class="degree-value degree-value_small" id="degreesValueThird">0</h3>
-          <span class="degree-symbol degree-symbol_small" id="degreesSymbolThird">°C</span>
-        </div>
-      </div>
-
+    <div class="map">
 
     </div>
-  </div>
 
-
-  <div class="map">
-
-  </div>
-
-
+  </main>
 </body>
 
 </html>
