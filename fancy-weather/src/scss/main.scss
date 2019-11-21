@@ -18,55 +18,110 @@ body {
   color: white;
 }
 
-.weather-wrapper {
+// left part
+.weather {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 40%;
-}
+  width: 50%;
 
-.location {
-  height: 30vh;
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
+  &__card {
+    width: 33%;
+    flex-shrink: 0;
+  }
 
   &__timezone {
     font-size: 4rem;
   }
-}
 
-.degree-section {
-  display: flex;
-  cursor: pointer;
+  &__about {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 30%;
+    width: 100%;
+  }
 
-  &__degrees {
-    margin: 10px;
-    font-size: 8rem;
+  &__about-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 60%;
+
+    &_big {
+      font-size: 4rem;
+    }
+
+    &_small {
+      font-size: 1.2rem;
+    }
+  }
+
+  &__time {
+    &_big {
+      font-size: 4rem;
+    }
+
+    &_small {
+      font-size: 1.8rem;
+    }
+  }
+
+  &__description {
+    text-align: end;
+  }
+
+  &__in-this-day {
+    display: flex;
+    cursor: pointer;
+  }
+
+  &__next-days {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
   }
 }
 
-.temperature-degree {
-  font-size: 12rem;
-}
-
-.temperature-description {
-  font-size: 4rem;
-}
-
-.temperature-next-days {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-
-.map-wrapper {
+.weather-card {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 40%;
+  flex-basis: 33%;
+
+  &_big {
+    flex-basis: 100%;
+  }
+}
+
+.degree-value {
+  &_big {
+    font-size: 12rem;
+  }
+  &_small {
+    font-size: 5rem;
+  }
+}
+
+.degree-symbol {
+  // margin: 5%;
+  &_big {
+    font-size: 8rem;
+  }
+
+  &_small {
+    font-size: 3rem;
+  }
+}
+
+// right part
+.map {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
 }
