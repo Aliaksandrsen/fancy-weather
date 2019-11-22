@@ -146,10 +146,22 @@ body {
 }
 
 // right part
-.map {
+.map-block {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 50%;
+}
+
+.map-wrapper {
+  width: 350px;
+  height: 350px;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.map {
+  width: 350px;
+  height: 350px;
 }

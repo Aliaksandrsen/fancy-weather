@@ -723,4 +723,4 @@ Skycons.prototype = {
 
 global.Skycons = Skycons;
 
-export { Skycons }
+export { Skycons };
