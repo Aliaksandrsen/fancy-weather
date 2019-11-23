@@ -11,15 +11,15 @@
 <body>
   <header class="header">
     <div class="header__half header__half_left">
-      <button id="loadBackground">Load</button>
-      <button id="en">EN</button>
-      <button id="ru">RU</button>
-      <button id="be">BE</button>
-      <button id="F">°C / °F</button>
+      <button id="loadBackground" class="button button_load">Load</button>
+      <button id="en" class="button button_en">EN</button>
+      <button id="ru" class="button button_ru">RU</button>
+      <button id="be" class="button button_be">BE</button>
+      <button id="F" class="button button_F">°C / °F</button>
     </div>
     <div class="header__half header__half_right">
-      <button id="serch">Serch</button>
-      <input type="text">
+      <button id="serchButton" class="button button_serch">Serch</button>
+      <input id="serchInput" class="header__serch-input" type="text">
     </div>
   </header>
 
@@ -27,14 +27,18 @@
   <main class="main" id="main">
     <div class="weather">
       <div class="weather-card weather-card_big">
-        <h1 class="weather__timezone" id="weatherTimezone">Timezone</h1>
-
+        <div class="weather__location" id="weatherLocation">
+          <h1 class="weather__town" id="town"></h1>
+          <div class="weather__country" id="country"></div>
+        </div>
+        <div class="weather__time weather__time_big" id="weatherTime">Weekday</div>
+        <div class="weather__time weather__time_big" id="weatherHoursAndMinutes">00:00</div>
         <div class="weather__about">
           <div class="weather__about-left weather__about-left_big">
-            <div class="weather__time weather__time_big" id="weatherTime">Weekday</div>
+
             <p class="weather__description" id="weatherDescreption">Its cold</p>
           </div>
-          <canvas id="icon" class="icon_big" width="256" height="256"></canvas>
+          <canvas id="icon" class="icon_big" width="196" height="196"></canvas>
         </div>
 
         <div class="weather__in-this-day" id="weatherToday">
@@ -47,10 +51,11 @@
 
       <div class="weather__next-days">
 
-        <div class="weather-card">
+        <div class="weather-card weather-card_small">
+          <div class="weather__time weather__time_small" id="weatherTimeFirst">Weekday</div>
           <div class="weather__about">
             <div class="weather__about-left weather__about-left_small">
-              <div class="weather__time weather__time_small" id="weatherTimeFirst">Weekday</div>
+
               <p class="weather__description" id="weatherDescreptionFirst">Its cold</p>
             </div>
             <canvas id="icon1" class="icon_big" width="64" height="64"></canvas>
@@ -63,10 +68,11 @@
         </div>
 
 
-        <div class="weather-card">
+        <div class="weather-card weather-card_small">
+          <div class="weather__time weather__time_small" id="weatherTimeSecond">Weekday</div>
           <div class="weather__about">
             <div class="weather__about-left weather__about-left_small">
-              <div class="weather__time weather__time_small" id="weatherTimeSecond">Weekday</div>
+
               <p class="weather__description" id="weatherDescreptionSecond">Its cold</p>
             </div>
             <canvas id="icon2" class="icon_big" width="64" height="64"></canvas>
@@ -79,10 +85,11 @@
         </div>
 
 
-        <div class="weather-card">
+        <div class="weather-card weather-card_small">
+          <div class="weather__time weather__time_small" id="weatherTimeThird">Weekday</div>
           <div class="weather__about">
             <div class="weather__about-left weather__about-left_small">
-              <div class="weather__time weather__time_small" id="weatherTimeThird">Weekday</div>
+
               <p class="weather__description" id="weatherDescreptionThird">Its cold</p>
             </div>
             <canvas id="icon3" class="icon_big" width="64" height="64"></canvas>
@@ -99,11 +106,12 @@
     </div>
 
 
-    <div class="map-block">
-      <div class="map-wrapper">
+    <div class="map-block" id="mapBlock">
+      <div class="map-wrapper" id="mapWrapper">
 
         <div id="map" class="map"></div>
-<!-- TODO div с долготой -->
+
+
       </div>
     </div>
 

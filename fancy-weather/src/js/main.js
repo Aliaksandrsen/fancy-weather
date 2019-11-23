@@ -1,9 +1,12 @@
 import { Skycons } from './skycons';
 
+// import { brotliDecompressSync } from 'zlib';
+
+
 let latitude;
 let longitude;
+let stringForBackgroundresponse;
 
-const weatherTimezone = document.getElementById('weatherTimezone');
 
 const weatherTime = document.getElementById('weatherTime');
 const weatherTimeFirst = document.getElementById('weatherTimeFirst');
@@ -25,8 +28,9 @@ const degreesSymbolFirst = document.getElementById('degreesSymbolFirst');
 const degreesSymbolSecond = document.getElementById('degreesSymbolSecond');
 const degreesSymbolThird = document.getElementById('degreesSymbolThird');
 
-const weatherToday = document.getElementById('weatherToday');
 
+// const weatherToday = document.getElementById('weatherToday');
+const F = document.getElementById('F');
 
 // formatTime function
 function formatTime(t) {
@@ -36,6 +40,8 @@ function formatTime(t) {
     year: '2-digit',
     month: '2-digit',
     day: 'numeric',
+    // hour: 'numeric',
+    // minute: 'numeric',
   });
 
   const timeNowGoodFormat = formatter.format(timeNow);
@@ -59,6 +65,7 @@ function weatherInit() {
     .then((response) => response.json())
     .then((data) => {
       // console.log(data);
+      stringForBackgroundresponse = data.currently.icon;// !==============
       const {
         time,
         summary,
@@ -71,8 +78,6 @@ function weatherInit() {
 
 
       // set DOM Elements from the API
-      weatherTimezone.textContent = data.timezone;
-
       weatherTime.textContent = formatTime(time);
       weatherTimeFirst.textContent = formatTime(first.time);
       weatherTimeSecond.textContent = formatTime(second.time);
@@ -110,7 +115,7 @@ function weatherInit() {
 
 
       // Change temperature to Celsius/Farenheit
-      weatherToday.addEventListener('click', () => {
+      F.addEventListener('click', () => {
         if (degreesSymbol.textContent === '°F') {
           degreesSymbol.textContent = '°C';
           degreesSymbolFirst.textContent = '°C';
@@ -161,4 +166,4 @@ if (!navigator.geolocation) {
   });
 }
 
-export { latitude, longitude };
+export { latitude, longitude, stringForBackgroundresponse };
