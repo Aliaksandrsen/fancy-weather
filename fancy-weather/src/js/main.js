@@ -1,11 +1,12 @@
 import { Skycons } from './skycons';
 
-// import { brotliDecompressSync } from 'zlib';
-
+import backgroundInit from './backgroundInit';
+import nameOfLocationInit from './nameOfLocationInit';
 
 let latitude;
 let longitude;
 let stringForBackgroundresponse;
+let lang = localStorage.getItem('lang') || 'english';
 
 
 const weatherTime = document.getElementById('weatherTime');
@@ -35,13 +36,17 @@ const F = document.getElementById('F');
 // formatTime function
 function formatTime(t) {
   const timeNow = new Date(t * 1000);
-  const formatter = new Intl.DateTimeFormat('ru', { // en-US
+  // !==========================================================
+  let language = 'en';
+  if (lang === 'english') language = 'en';
+  if (lang === 'russian') language = 'ru'; // ru_Ru
+  if (lang === 'belarusian') language = 'be'; // be_BY
+
+  const formatter = new Intl.DateTimeFormat(`${language}`, {
     weekday: 'short',
     year: '2-digit',
     month: '2-digit',
     day: 'numeric',
-    // hour: 'numeric',
-    // minute: 'numeric',
   });
 
   const timeNowGoodFormat = formatter.format(timeNow);
@@ -50,6 +55,10 @@ function formatTime(t) {
 
 
 function weatherInit() {
+  // ? подтягиваем из LS
+
+  lang = localStorage.getItem('lang') || 'english';
+
   function setIcons(icon, iconID) {
     const skycons = new Skycons({ color: 'white' });
     const currentIcon = icon.replace(/-/g, '_').toUpperCase();
@@ -57,15 +66,24 @@ function weatherInit() {
     return skycons.set(iconID, Skycons[currentIcon]);
   }
 
+
+  // ! =================================
+  let language = 'en';
+  if (lang === 'english') language = 'en';
+  if (lang === 'russian') language = 'ru';
+  if (lang === 'belarusian') language = 'be';
+
   const proxy = 'https://cors-anywhere.herokuapp.com/';
   // const urlWithCoordinates = `${proxy}https://api.darksky.net/forecast/ef66892cfcce1b6b628ef03d7a7a6d3c/${latitude},${longitude}?lang=ru`; // en-US
-  const urlWithCoordinates = `${proxy}https://api.darksky.net/forecast/2bf27985f5a6844febcdc43c99cc81ce/${latitude},${longitude}?lang=ru`;
+  const urlWithCoordinates = `${proxy}https://api.darksky.net/forecast/2bf27985f5a6844febcdc43c99cc81ce/${latitude},${longitude}?lang=${language}`;
 
   fetch(urlWithCoordinates)
     .then((response) => response.json())
     .then((data) => {
       // console.log(data);
-      stringForBackgroundresponse = data.currently.icon;// !==============
+      stringForBackgroundresponse = data.currently.icon;
+      //! после получения ответа вызов инициализации background
+      backgroundInit();
       const {
         time,
         summary,
@@ -166,4 +184,37 @@ if (!navigator.geolocation) {
   });
 }
 
-export { latitude, longitude, stringForBackgroundresponse };
+
+// !================================== язык
+
+const en = document.getElementById('en');
+function enInit() {
+  localStorage.setItem('lang', 'english');
+  weatherInit();
+  nameOfLocationInit();
+}
+
+const ru = document.getElementById('ru');
+function ruInit() {
+  localStorage.setItem('lang', 'russian');
+  weatherInit();
+  nameOfLocationInit();
+}
+const be = document.getElementById('be');
+function beInit() {
+  localStorage.setItem('lang', 'belarusian');
+  weatherInit();
+  nameOfLocationInit();
+}
+
+en.addEventListener('click', enInit);
+ru.addEventListener('click', ruInit);
+be.addEventListener('click', beInit);
+
+// !================================== язык
+
+export {
+  latitude,
+  longitude,
+  stringForBackgroundresponse,
+};

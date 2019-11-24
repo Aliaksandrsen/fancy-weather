@@ -1,12 +1,8 @@
 const weatherHoursAndMinutes = document.getElementById('weatherHoursAndMinutes');
 
-function getHoursAndMinutes() {
+function hoursAndMinutesInit() {
   const timeNow = new Date();
-  const formatter = new Intl.DateTimeFormat('ru', { // en-US
-    // weekday: 'short',
-    // year: '2-digit',
-    // month: '2-digit',
-    // day: 'numeric',
+  const formatter = new Intl.DateTimeFormat('ru', {
     hour: 'numeric',
     minute: 'numeric',
   });
@@ -16,5 +12,5 @@ function getHoursAndMinutes() {
 }
 
 setInterval(() => {
-  getHoursAndMinutes();
+  hoursAndMinutesInit();
 }, 1000);

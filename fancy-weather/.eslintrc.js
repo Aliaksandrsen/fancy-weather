@@ -17,5 +17,6 @@ module.exports = {
     "sourceType": "module",
   },
   "rules": {
+    'import/no-cycle': 0,
   }
 }
