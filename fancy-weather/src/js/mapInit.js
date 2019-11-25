@@ -1,10 +1,8 @@
 import ymaps from 'ymaps';
 import { longitude, latitude } from './main';
 
-// ? подтягиваем из LS
 
 export default function mapInit() {
-
   ymaps
     .load('https://api-maps.yandex.ru/2.1/?apikey=e1d2fdeb-5a51-4d55-a96b-99d83404c3d3&load=package.full&lang=en_RU')
     .then((maps) => {

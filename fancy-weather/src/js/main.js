@@ -32,6 +32,8 @@ const degreesSymbolThird = document.getElementById('degreesSymbolThird');
 
 // const weatherToday = document.getElementById('weatherToday');
 const F = document.getElementById('F');
+const C = document.getElementById('C');
+// let symbolOfDegrees = localStorage.getItem('symbolOfDegrees') || '°C';
 
 // formatTime function
 function formatTime(t) {
@@ -131,20 +133,9 @@ function weatherInit() {
       setIcons(second.icon, document.getElementById('icon2'));
       setIcons(third.icon, document.getElementById('icon3'));
 
-
       // Change temperature to Celsius/Farenheit
-      F.addEventListener('click', () => {
-        if (degreesSymbol.textContent === '°F') {
-          degreesSymbol.textContent = '°C';
-          degreesSymbolFirst.textContent = '°C';
-          degreesSymbolSecond.textContent = '°C';
-          degreesSymbolThird.textContent = '°C';
-
-          degreeValue.textContent = celsius;
-          degreeValueFirst.textContent = celsius1;
-          degreeValueSecond.textContent = celsius2;
-          degreeValueThird.textContent = celsius3;
-        } else {
+      function degreesInitF() {
+        if ((localStorage.getItem('symbolOfDegrees')) === '°F') {
           degreesSymbol.textContent = '°F';
           degreesSymbolFirst.textContent = '°F';
           degreesSymbolSecond.textContent = '°F';
@@ -155,7 +146,31 @@ function weatherInit() {
           degreeValueSecond.textContent = temperature2;
           degreeValueThird.textContent = temperature3;
         }
+      }
+      F.addEventListener('click', () => {
+        localStorage.setItem('symbolOfDegrees', '°F');
+        degreesInitF();
       });
+      degreesInitF();
+
+      function degreesInitC() {
+        if ((localStorage.getItem('symbolOfDegrees')) === '°C') {
+          degreesSymbol.textContent = '°C';
+          degreesSymbolFirst.textContent = '°C';
+          degreesSymbolSecond.textContent = '°C';
+          degreesSymbolThird.textContent = '°C';
+
+          degreeValue.textContent = celsius;
+          degreeValueFirst.textContent = celsius1;
+          degreeValueSecond.textContent = celsius2;
+          degreeValueThird.textContent = celsius3;
+        }
+      }
+      C.addEventListener('click', () => {
+        localStorage.setItem('symbolOfDegrees', '°C');
+        degreesInitC();
+      });
+      degreesInitC();
     });
 }
 
@@ -193,6 +208,7 @@ function enInit() {
   weatherInit();
   nameOfLocationInit();
 }
+en.addEventListener('click', enInit);
 
 const ru = document.getElementById('ru');
 function ruInit() {
@@ -200,15 +216,14 @@ function ruInit() {
   weatherInit();
   nameOfLocationInit();
 }
+ru.addEventListener('click', ruInit);
+
 const be = document.getElementById('be');
 function beInit() {
   localStorage.setItem('lang', 'belarusian');
   weatherInit();
   nameOfLocationInit();
 }
-
-en.addEventListener('click', enInit);
-ru.addEventListener('click', ruInit);
 be.addEventListener('click', beInit);
 
 // !================================== язык
