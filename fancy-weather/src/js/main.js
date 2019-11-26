@@ -7,33 +7,9 @@ let latitude;
 let longitude;
 let stringForBackgroundresponse;
 let lang = localStorage.getItem('lang') || 'english';
+// флаг была ли загрузка background
+let backgroundInitFlag;
 
-
-const weatherTime = document.getElementById('weatherTime');
-const weatherTimeFirst = document.getElementById('weatherTimeFirst');
-const weatherTimeSecond = document.getElementById('weatherTimeSecond');
-const weatherTimeThird = document.getElementById('weatherTimeThird');
-
-const weatherDescreption = document.getElementById('weatherDescreption');
-const weatherDescreptionFirst = document.getElementById('weatherDescreptionFirst');
-const weatherDescreptionSecond = document.getElementById('weatherDescreptionSecond');
-const weatherDescreptionThird = document.getElementById('weatherDescreptionThird');
-
-const degreeValue = document.getElementById('degreesValue');
-const degreeValueFirst = document.getElementById('degreesValueFirst');
-const degreeValueSecond = document.getElementById('degreesValueSecond');
-const degreeValueThird = document.getElementById('degreesValueThird');
-
-const degreesSymbol = document.getElementById('degreesSymbol');
-const degreesSymbolFirst = document.getElementById('degreesSymbolFirst');
-const degreesSymbolSecond = document.getElementById('degreesSymbolSecond');
-const degreesSymbolThird = document.getElementById('degreesSymbolThird');
-
-
-// const weatherToday = document.getElementById('weatherToday');
-const F = document.getElementById('F');
-const C = document.getElementById('C');
-// let symbolOfDegrees = localStorage.getItem('symbolOfDegrees') || '°C';
 
 // formatTime function
 function formatTime(t) {
@@ -57,8 +33,31 @@ function formatTime(t) {
 
 
 function weatherInit() {
-  // ? подтягиваем из LS
+  const weatherTime = document.getElementById('weatherTime');
+  const weatherTimeFirst = document.getElementById('weatherTimeFirst');
+  const weatherTimeSecond = document.getElementById('weatherTimeSecond');
+  const weatherTimeThird = document.getElementById('weatherTimeThird');
 
+  const weatherDescreption = document.getElementById('weatherDescreption');
+  const weatherDescreptionFirst = document.getElementById('weatherDescreptionFirst');
+  const weatherDescreptionSecond = document.getElementById('weatherDescreptionSecond');
+  const weatherDescreptionThird = document.getElementById('weatherDescreptionThird');
+
+  const degreeValue = document.getElementById('degreesValue');
+  const degreeValueFirst = document.getElementById('degreesValueFirst');
+  const degreeValueSecond = document.getElementById('degreesValueSecond');
+  const degreeValueThird = document.getElementById('degreesValueThird');
+
+  const degreesSymbol = document.getElementById('degreesSymbol');
+  const degreesSymbolFirst = document.getElementById('degreesSymbolFirst');
+  const degreesSymbolSecond = document.getElementById('degreesSymbolSecond');
+  const degreesSymbolThird = document.getElementById('degreesSymbolThird');
+
+  const F = document.getElementById('F');
+  const C = document.getElementById('C');
+
+
+  // подтягиваем из LS
   lang = localStorage.getItem('lang') || 'english';
 
   function setIcons(icon, iconID) {
@@ -68,8 +67,6 @@ function weatherInit() {
     return skycons.set(iconID, Skycons[currentIcon]);
   }
 
-
-  // ! =================================
   let language = 'en';
   if (lang === 'english') language = 'en';
   if (lang === 'russian') language = 'ru';
@@ -85,7 +82,12 @@ function weatherInit() {
       // console.log(data);
       stringForBackgroundresponse = data.currently.icon;
       //! после получения ответа вызов инициализации background
-      backgroundInit();
+      // проверка флага background
+      if (!backgroundInitFlag) {
+        backgroundInit();
+      }
+      backgroundInitFlag = true;
+
       const {
         time,
         summary,
@@ -132,6 +134,7 @@ function weatherInit() {
       setIcons(first.icon, document.getElementById('icon1'));
       setIcons(second.icon, document.getElementById('icon2'));
       setIcons(third.icon, document.getElementById('icon3'));
+
 
       // Change temperature to Celsius/Farenheit
       function degreesInitF() {

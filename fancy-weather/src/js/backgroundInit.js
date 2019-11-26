@@ -44,9 +44,9 @@ export default function backgroundInit() {
     const data = await response.json();
     const urlImg = data.urls.regular;
 
-    document.body.style.backgroundImage = `linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url('${urlImg}')`;
+    document.body.style.backgroundImage = `linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 1) ), url('${urlImg}')`;
     document.body.style.backgroundRepeat = 'no-repeat';
-    document.body.style.backgroundSize = '100vw 100vh';
+    document.body.style.backgroundSize = '100% 100vh';
   }
   getLinkToImage();
 }

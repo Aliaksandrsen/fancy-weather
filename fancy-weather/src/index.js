@@ -5,4 +5,4 @@ import './js/mapInit';
 import './js/nameOfLocationInit';
 import './js/backgroundInit';
 import './js/hoursAndMinutesInit';
-import './js/loadBackground';
+import './js/animatedIcons';

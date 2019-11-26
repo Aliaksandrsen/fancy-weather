@@ -22,7 +22,23 @@
   }
 }
 
-.load-background  {
+.load-background {
+  border: none;
+  background-color: transparent;
+  outline: 0;
+
+  i {
+    color: #ffffff;
+    font-size: 2em;
+    cursor: pointer;
+  }
+
+  i.spin-animation {
+    @include animation(spin, 0.5s, ease-in);
+  }
+}
+
+.load-town {
   border: none;
   background-color: transparent;
   outline: 0;
