@@ -1,6 +1,6 @@
 window.addEventListener('load', () => {
-  const btn1 = document.getElementById('loadBackground');
-  const btn2 = document.getElementById('searchButton');
+  const btn1 = document.querySelector('#loadBackground');
+  const btn2 = document.querySelector('#searchButton');
 
   btn1.addEventListener('click', () => {
     btn1.children[0].classList.add('spin-animation');

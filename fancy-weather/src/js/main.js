@@ -1,7 +1,9 @@
+import { mapInit, longitudeLatitudeInit } from './mapInit';
 import { Skycons } from './skycons';
 
 import backgroundInit from './backgroundInit';
-import nameOfLocationInit from './nameOfLocationInit';
+import nameOfCurrentLocationInit from './nameOfCurrentLocationInit';
+
 
 let latitude;
 let longitude;
@@ -14,7 +16,7 @@ let backgroundInitFlag;
 // formatTime function
 function formatTime(t) {
   const timeNow = new Date(t * 1000);
-  // !==========================================================
+
   let language = 'en';
   if (lang === 'english') language = 'en';
   if (lang === 'russian') language = 'ru'; // ru_Ru
@@ -33,28 +35,28 @@ function formatTime(t) {
 
 
 function weatherInit() {
-  const weatherTime = document.getElementById('weatherTime');
-  const weatherTimeFirst = document.getElementById('weatherTimeFirst');
-  const weatherTimeSecond = document.getElementById('weatherTimeSecond');
-  const weatherTimeThird = document.getElementById('weatherTimeThird');
+  const weatherTime = document.querySelector('#weatherTime');
+  const weatherTimeFirst = document.querySelector('#weatherTimeFirst');
+  const weatherTimeSecond = document.querySelector('#weatherTimeSecond');
+  const weatherTimeThird = document.querySelector('#weatherTimeThird');
 
-  const weatherDescreption = document.getElementById('weatherDescreption');
-  const weatherDescreptionFirst = document.getElementById('weatherDescreptionFirst');
-  const weatherDescreptionSecond = document.getElementById('weatherDescreptionSecond');
-  const weatherDescreptionThird = document.getElementById('weatherDescreptionThird');
+  const weatherDescreption = document.querySelector('#weatherDescreption');
+  const weatherDescreptionFirst = document.querySelector('#weatherDescreptionFirst');
+  const weatherDescreptionSecond = document.querySelector('#weatherDescreptionSecond');
+  const weatherDescreptionThird = document.querySelector('#weatherDescreptionThird');
 
-  const degreeValue = document.getElementById('degreesValue');
-  const degreeValueFirst = document.getElementById('degreesValueFirst');
-  const degreeValueSecond = document.getElementById('degreesValueSecond');
-  const degreeValueThird = document.getElementById('degreesValueThird');
+  const degreeValue = document.querySelector('#degreesValue');
+  const degreeValueFirst = document.querySelector('#degreesValueFirst');
+  const degreeValueSecond = document.querySelector('#degreesValueSecond');
+  const degreeValueThird = document.querySelector('#degreesValueThird');
 
-  const degreesSymbol = document.getElementById('degreesSymbol');
-  const degreesSymbolFirst = document.getElementById('degreesSymbolFirst');
-  const degreesSymbolSecond = document.getElementById('degreesSymbolSecond');
-  const degreesSymbolThird = document.getElementById('degreesSymbolThird');
+  const degreesSymbol = document.querySelector('#degreesSymbol');
+  const degreesSymbolFirst = document.querySelector('#degreesSymbolFirst');
+  const degreesSymbolSecond = document.querySelector('#degreesSymbolSecond');
+  const degreesSymbolThird = document.querySelector('#degreesSymbolThird');
 
-  const F = document.getElementById('F');
-  const C = document.getElementById('C');
+  const F = document.querySelector('#F');
+  const C = document.querySelector('#C');
 
 
   // подтягиваем из LS
@@ -73,20 +75,21 @@ function weatherInit() {
   if (lang === 'belarusian') language = 'be';
 
   const proxy = 'https://cors-anywhere.herokuapp.com/';
-  // const urlWithCoordinates = `${proxy}https://api.darksky.net/forecast/ef66892cfcce1b6b628ef03d7a7a6d3c/${latitude},${longitude}?lang=ru`; // en-US
-  const urlWithCoordinates = `${proxy}https://api.darksky.net/forecast/2bf27985f5a6844febcdc43c99cc81ce/${latitude},${longitude}?lang=${language}`;
+  // console.log(latitude);
+  // console.log(longitude);
+  const urlWithCoordinates = `${proxy}https://api.darksky.net/forecast/ef66892cfcce1b6b628ef03d7a7a6d3c/${latitude},${longitude}?lang=${language}`;
 
   fetch(urlWithCoordinates)
     .then((response) => response.json())
     .then((data) => {
       // console.log(data);
       stringForBackgroundresponse = data.currently.icon;
-      //! после получения ответа вызов инициализации background
+      // после получения ответа вызов инициализации background
       // проверка флага background
-      if (!backgroundInitFlag) {
+      if (data.currently.icon !== backgroundInitFlag) {
         backgroundInit();
       }
-      backgroundInitFlag = true;
+      backgroundInitFlag = data.currently.icon;
 
       const {
         time,
@@ -96,7 +99,6 @@ function weatherInit() {
       } = data.currently;
 
       const [, first, second, third] = data.daily.data;
-      // console.log(first);
 
 
       // set DOM Elements from the API
@@ -130,10 +132,10 @@ function weatherInit() {
       degreeValueThird.textContent = celsius3;
 
       // Set Icons
-      setIcons(icon, document.getElementById('icon'));
-      setIcons(first.icon, document.getElementById('icon1'));
-      setIcons(second.icon, document.getElementById('icon2'));
-      setIcons(third.icon, document.getElementById('icon3'));
+      setIcons(icon, document.querySelector('#icon'));
+      setIcons(first.icon, document.querySelector('#icon1'));
+      setIcons(second.icon, document.querySelector('#icon2'));
+      setIcons(third.icon, document.querySelector('#icon3'));
 
 
       // Change temperature to Celsius/Farenheit
@@ -205,31 +207,78 @@ if (!navigator.geolocation) {
 
 // !================================== язык
 
-const en = document.getElementById('en');
+const en = document.querySelector('#en');
 function enInit() {
   localStorage.setItem('lang', 'english');
   weatherInit();
-  nameOfLocationInit();
+  nameOfCurrentLocationInit();
 }
 en.addEventListener('click', enInit);
 
-const ru = document.getElementById('ru');
+const ru = document.querySelector('#ru');
 function ruInit() {
   localStorage.setItem('lang', 'russian');
   weatherInit();
-  nameOfLocationInit();
+  nameOfCurrentLocationInit();
 }
 ru.addEventListener('click', ruInit);
 
-const be = document.getElementById('be');
+const be = document.querySelector('#be');
 function beInit() {
   localStorage.setItem('lang', 'belarusian');
   weatherInit();
-  nameOfLocationInit();
+  nameOfCurrentLocationInit();
 }
 be.addEventListener('click', beInit);
 
 // !================================== язык
+
+
+// ? ========================================== search location
+
+const searchButton = document.querySelector('#searchButton');
+const searchInput = document.querySelector('#searchInput');
+
+// let longitudeFromAPI;
+// let latitudeFromAPI;
+
+function nameOfSearchLocationInit() {
+  // const country = document.getElementById('country');
+  // const town = document.getElementById('town');
+
+  lang = localStorage.getItem('lang') || 'english';
+
+  const string = searchInput.value;
+  // console.log(string);
+
+  let language = 'en_US';
+  if (lang === 'english') language = 'en_US';
+  if (lang === 'russian') language = 'ru_Ru';
+  if (lang === 'belarusian') language = 'be_BY';
+
+  fetch(`https://api.opencagedata.com/geocode/v1/json?q=${string}&key=7bc6b65308044f5282bbe768d6bc320c&language=${language}&pretty=1`)
+    .then((response) => response.json())
+    .then((data) => {
+      longitude = data.results[0].geometry.lng;
+      latitude = data.results[0].geometry.lat;
+    })
+    .then(() => {
+      // после ответа сервера с погодой заново отрисовываем погоду
+      weatherInit();
+      nameOfCurrentLocationInit();
+      // удаляем старую карту
+      document.querySelector('.ymaps-2-1-75-map').remove();
+      mapInit();
+      longitudeLatitudeInit();
+    });
+}
+
+
+searchButton.addEventListener('click', nameOfSearchLocationInit);
+
+
+// ? ==========================================
+
 
 export {
   latitude,

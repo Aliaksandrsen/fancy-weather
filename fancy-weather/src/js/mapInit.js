@@ -15,6 +15,7 @@ function mapInit() {
     });
 }
 mapInit();
+// window.addEventListener('load', mapInit);
 
 function degToDms(deg) {
   let d = Math.floor(deg);
@@ -35,14 +36,17 @@ function degToDms(deg) {
   return (`${d}° ${m}" ${s}'`);
 }
 
-
 function longitudeLatitudeInit() {
   const longitudeDms = degToDms(longitude);
   const latitudeDms = degToDms(latitude);
-  const latitudeWithMinute = document.getElementById('latitudeWithMinute');
-  const longitudeWithMinute = document.getElementById('longitudeWithMinute');
+  const latitudeWithMinute = document.querySelector('#latitudeWithMinute');
+  const longitudeWithMinute = document.querySelector('#longitudeWithMinute');
+
   latitudeWithMinute.textContent = `${latitudeDms}`;
   longitudeWithMinute.textContent = `${longitudeDms}`;
 }
 
 window.addEventListener('load', longitudeLatitudeInit);
+
+
+export { mapInit, longitudeLatitudeInit };
