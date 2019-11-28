@@ -15,7 +15,6 @@ function mapInit() {
     });
 }
 mapInit();
-// window.addEventListener('load', mapInit);
 
 function degToDms(deg) {
   let d = Math.floor(deg);
@@ -42,10 +41,21 @@ function longitudeLatitudeInit() {
   const latitudeWithMinute = document.querySelector('#latitudeWithMinute');
   const longitudeWithMinute = document.querySelector('#longitudeWithMinute');
 
-  latitudeWithMinute.textContent = `${latitudeDms}`;
-  longitudeWithMinute.textContent = `${longitudeDms}`;
-}
+  const lang = localStorage.getItem('lang') || 'english';
 
+  if (lang === 'english') {
+    latitudeWithMinute.textContent = `Latitude: ${latitudeDms}`;
+    longitudeWithMinute.textContent = `Longitude: ${longitudeDms}`;
+  }
+  if (lang === 'russian') {
+    latitudeWithMinute.textContent = `Широта: ${latitudeDms}`;
+    longitudeWithMinute.textContent = `Долгота: ${longitudeDms}`;
+  }
+  if (lang === 'belarusian') {
+    latitudeWithMinute.textContent = `Шырата: ${latitudeDms}`;
+    longitudeWithMinute.textContent = `Даўгата: ${longitudeDms}`;
+  }
+}
 window.addEventListener('load', longitudeLatitudeInit);
 
 

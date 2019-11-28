@@ -18,5 +18,8 @@ module.exports = {
   },
   "rules": {
     'import/no-cycle': 0,
+    'no-undef': 0,
+    'new-cap': 0,
+    'import/no-mutable-exports': 0,
   }
 }

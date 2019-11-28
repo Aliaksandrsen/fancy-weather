@@ -1,6 +1,7 @@
 import { mapInit, longitudeLatitudeInit } from './mapInit';
 import { Skycons } from './skycons';
 
+
 import backgroundInit from './backgroundInit';
 import nameOfCurrentLocationInit from './nameOfCurrentLocationInit';
 
@@ -9,7 +10,7 @@ let latitude;
 let longitude;
 let stringForBackgroundresponse;
 let lang = localStorage.getItem('lang') || 'english';
-// флаг была ли загрузка background
+// flag background loaded or not
 let backgroundInitFlag;
 
 
@@ -19,8 +20,8 @@ function formatTime(t) {
 
   let language = 'en';
   if (lang === 'english') language = 'en';
-  if (lang === 'russian') language = 'ru'; // ru_Ru
-  if (lang === 'belarusian') language = 'be'; // be_BY
+  if (lang === 'russian') language = 'ru';
+  if (lang === 'belarusian') language = 'be';
 
   const formatter = new Intl.DateTimeFormat(`${language}`, {
     weekday: 'short',
@@ -59,7 +60,6 @@ function weatherInit() {
   const C = document.querySelector('#C');
 
 
-  // подтягиваем из LS
   lang = localStorage.getItem('lang') || 'english';
 
   function setIcons(icon, iconID) {
@@ -75,18 +75,15 @@ function weatherInit() {
   if (lang === 'belarusian') language = 'be';
 
   const proxy = 'https://cors-anywhere.herokuapp.com/';
-  // console.log(latitude);
-  // console.log(longitude);
   const urlWithCoordinates = `${proxy}https://api.darksky.net/forecast/ef66892cfcce1b6b628ef03d7a7a6d3c/${latitude},${longitude}?lang=${language}`;
 
   fetch(urlWithCoordinates)
     .then((response) => response.json())
     .then((data) => {
-      // console.log(data);
       stringForBackgroundresponse = data.currently.icon;
-      // после получения ответа вызов инициализации background
-      // проверка флага background
+      // check background flag
       if (data.currently.icon !== backgroundInitFlag) {
+        // after received the response => background initialization
         backgroundInit();
       }
       backgroundInitFlag = data.currently.icon;
@@ -112,14 +109,10 @@ function weatherInit() {
       weatherDescreptionSecond.textContent = second.summary;
       weatherDescreptionThird.textContent = third.summary;
 
-      // degreeValue.textContent = Math.round(temperature);
       const temperature0 = Math.round(temperature);
       const temperature1 = Math.round((first.temperatureMin + first.temperatureMax) / 2);
-      // degreeValueFirst.textContent = temperature1;
       const temperature2 = Math.round((second.temperatureMin + second.temperatureMax) / 2);
-      // degreeValueSecond.textContent = temperature2;
       const temperature3 = Math.round((third.temperatureMin + third.temperatureMax) / 2);
-      // degreeValueThird.textContent = temperature3;
 
       // Formula for celsius
       const celsius = Math.round((temperature0 - 32) * (5 / 9));
@@ -179,7 +172,7 @@ function weatherInit() {
     });
 }
 
-// если все good c navigator
+// if navigator is available
 if (navigator.geolocation) {
   navigator.geolocation.getCurrentPosition((position) => {
     longitude = position.coords.longitude;
@@ -188,8 +181,6 @@ if (navigator.geolocation) {
     weatherInit();
   });
 }
-
-// если нет navigator
 if (!navigator.geolocation) {
   window.addEventListener('load', () => {
     const urlWithCoordinatesForIpinfo = 'https://ipinfo.io/json?token=a3d4d591bf436c';
@@ -205,13 +196,13 @@ if (!navigator.geolocation) {
 }
 
 
-// !================================== язык
-
+// =================== language selection
 const en = document.querySelector('#en');
 function enInit() {
   localStorage.setItem('lang', 'english');
   weatherInit();
   nameOfCurrentLocationInit();
+  longitudeLatitudeInit();
 }
 en.addEventListener('click', enInit);
 
@@ -220,6 +211,7 @@ function ruInit() {
   localStorage.setItem('lang', 'russian');
   weatherInit();
   nameOfCurrentLocationInit();
+  longitudeLatitudeInit();
 }
 ru.addEventListener('click', ruInit);
 
@@ -228,28 +220,20 @@ function beInit() {
   localStorage.setItem('lang', 'belarusian');
   weatherInit();
   nameOfCurrentLocationInit();
+  longitudeLatitudeInit();
 }
 be.addEventListener('click', beInit);
+// ===================================
 
-// !================================== язык
-
-
-// ? ========================================== search location
 
 const searchButton = document.querySelector('#searchButton');
 const searchInput = document.querySelector('#searchInput');
 
-// let longitudeFromAPI;
-// let latitudeFromAPI;
 
+// =================== search location
 function nameOfSearchLocationInit() {
-  // const country = document.getElementById('country');
-  // const town = document.getElementById('town');
-
   lang = localStorage.getItem('lang') || 'english';
-
   const string = searchInput.value;
-  // console.log(string);
 
   let language = 'en_US';
   if (lang === 'english') language = 'en_US';
@@ -266,18 +250,39 @@ function nameOfSearchLocationInit() {
       // после ответа сервера с погодой заново отрисовываем погоду
       weatherInit();
       nameOfCurrentLocationInit();
-      // удаляем старую карту
+      // remove old map
       document.querySelector('.ymaps-2-1-75-map').remove();
       mapInit();
       longitudeLatitudeInit();
     });
 }
-
-
 searchButton.addEventListener('click', nameOfSearchLocationInit);
+// =================================
 
 
-// ? ==========================================
+// voice recognition
+const voice = document.getElementById('voice');
+voice.addEventListener('click', () => {
+  const recognition = new webkitSpeechRecognition();
+  recognition.interimResults = false;
+  recognition.lang = 'en-US';
+
+  if (lang === 'english') recognition.lang = 'en_US';
+  if (lang === 'russian') recognition.lang = 'ru_Ru';
+  if (lang === 'belarusian') recognition.lang = 'be_BY';
+  recognition.maxAlternatives = 1;
+
+  recognition.addEventListener('result', (e) => {
+    const transcript = Array.from(e.results)
+      .map((result) => result[0])
+      .map((result) => result.transcript)
+      .join();
+    searchInput.value = transcript;
+  });
+  recognition.start();
+  recognition.addEventListener('end', nameOfSearchLocationInit);
+});
+// =================================
 
 
 export {

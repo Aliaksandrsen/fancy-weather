@@ -21,5 +21,4 @@ export default function nameOfCurrentLocationInit() {
       town.textContent = `${townFromAPI}`;
     });
 }
-
 window.addEventListener('load', nameOfCurrentLocationInit);

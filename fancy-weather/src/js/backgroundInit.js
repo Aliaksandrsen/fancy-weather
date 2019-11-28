@@ -21,23 +21,19 @@ function getHours() {
   }
 
   const monthAndHour = `${getSeason(monthNumber)},${hour}`;
-  // console.log(monthAndHour);
   return monthAndHour;
 }
 
 export default function backgroundInit() {
-  // делаю анализ для запроса background на основании англ локализации
-
+  // doing an analysis for the request background based on English localization
   async function getLinkToImage() {
-    // определяем в какой ориентации загружать картинку
+    // determine which orientation to load the image
     let orientation = 'landscape';
     if (window.innerWidth < window.innerHeight) {
       orientation = 'portrait';
     }
 
-
     const informationForImage = `${stringForBackgroundresponse},${getHours()}`;
-    // console.log(informationForImage);
     const url = `https://api.unsplash.com/photos/random?orientation=${orientation}&per_page=1&query=${informationForImage}&client_id=97468db9ac3f46aba050edeb6ee94ee6c2fa732c4970c3d260cdbf50156a6f44`;
     // const url = `https://api.unsplash.com/photos/random?orientation=${orientation}&per_page=1&query=${informationForImage}&client_id=e2077ad31a806c894c460aec8f81bc2af4d09c4f8104ae3177bb809faf0eac17`;
 
