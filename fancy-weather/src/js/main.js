@@ -4,6 +4,7 @@ import { Skycons } from './skycons';
 
 import backgroundInit from './backgroundInit';
 import nameOfCurrentLocationInit from './nameOfCurrentLocationInit';
+import errorRequestInit from './errorRequestInit';
 
 
 let latitude;
@@ -254,6 +255,9 @@ function nameOfSearchLocationInit() {
       document.querySelector('.ymaps-2-1-75-map').remove();
       mapInit();
       longitudeLatitudeInit();
+    })
+    .catch(() => {
+      errorRequestInit();
     });
 }
 searchButton.addEventListener('click', nameOfSearchLocationInit);

@@ -15,7 +15,10 @@ export default function nameOfCurrentLocationInit() {
     .then((response) => response.json())
     .then((data) => {
       const countryFromAPI = data.results[0].components.country;
-      const townFromAPI = data.results[0].components.city || data.results[0].components.town || ' ';
+      const townFromAPI = data.results[0].components.city
+        || data.results[0].components.town
+        || data.results[0].components.village
+        || ' ';
 
       country.textContent = `${countryFromAPI}`;
       town.textContent = `${townFromAPI}`;

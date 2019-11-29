@@ -6,3 +6,4 @@ import './js/nameOfCurrentLocationInit';
 import './js/backgroundInit';
 import './js/hoursAndMinutesInit';
 import './js/animatedIcons';
+import './js/errorRequestInit';
