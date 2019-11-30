@@ -14,7 +14,7 @@ export default function nameOfCurrentLocationInit() {
   fetch(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=7bc6b65308044f5282bbe768d6bc320c&language=${language}&pretty=1`)
     .then((response) => response.json())
     .then((data) => {
-      const countryFromAPI = data.results[0].components.country;
+      const countryFromAPI = data.results[0].components.country || ' ';
       const townFromAPI = data.results[0].components.city
         || data.results[0].components.town
         || data.results[0].components.village
@@ -24,4 +24,3 @@ export default function nameOfCurrentLocationInit() {
       town.textContent = `${townFromAPI}`;
     });
 }
-window.addEventListener('load', nameOfCurrentLocationInit);

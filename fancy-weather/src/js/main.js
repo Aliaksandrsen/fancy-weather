@@ -1,11 +1,17 @@
 import { mapInit, longitudeLatitudeInit } from './mapInit';
 import { Skycons } from './skycons';
-
-
+import hoursAndMinutesInit from './hoursAndMinutesInit';
 import backgroundInit from './backgroundInit';
 import nameOfCurrentLocationInit from './nameOfCurrentLocationInit';
-import errorRequestInit from './errorRequestInit';
+import errorRequestInit from './showErrorSearchRequest';
+import showErrorLocationAccess from './showErrorLocationAccess';
 
+
+(function bannerInit() {
+  const banner = document.createElement('div');
+  banner.className = 'banner';
+  document.body.prepend(banner);
+}());
 
 let latitude;
 let longitude;
@@ -13,10 +19,10 @@ let stringForBackgroundresponse;
 let lang = localStorage.getItem('lang') || 'english';
 // flag background loaded or not
 let backgroundInitFlag;
-
+let timerId;
 
 // formatTime function
-function formatTime(t) {
+function formatTime(t, timezone) {
   const timeNow = new Date(t * 1000);
 
   let language = 'en';
@@ -25,6 +31,7 @@ function formatTime(t) {
   if (lang === 'belarusian') language = 'be';
 
   const formatter = new Intl.DateTimeFormat(`${language}`, {
+    timeZone: `${timezone}`,
     weekday: 'short',
     year: '2-digit',
     month: '2-digit',
@@ -37,7 +44,6 @@ function formatTime(t) {
 
 
 function weatherInit() {
-  const weatherTime = document.querySelector('#weatherTime');
   const weatherTimeFirst = document.querySelector('#weatherTimeFirst');
   const weatherTimeSecond = document.querySelector('#weatherTimeSecond');
   const weatherTimeThird = document.querySelector('#weatherTimeThird');
@@ -76,11 +82,18 @@ function weatherInit() {
   if (lang === 'belarusian') language = 'be';
 
   const proxy = 'https://cors-anywhere.herokuapp.com/';
-  const urlWithCoordinates = `${proxy}https://api.darksky.net/forecast/ef66892cfcce1b6b628ef03d7a7a6d3c/${latitude},${longitude}?lang=${language}`;
+  // const urlWithCoordinates = `${proxy}https://api.darksky.net/forecast/ef66892cfcce1b6b628ef03d7a7a6d3c/${latitude},${longitude}?lang=${language}`;
+  const urlWithCoordinates = `${proxy}https://api.darksky.net/forecast/07caf5f6c2905a352907b13fb5b347a0/${latitude},${longitude}?lang=${language}`;
 
   fetch(urlWithCoordinates)
     .then((response) => response.json())
     .then((data) => {
+      // time init
+      clearInterval(timerId);
+      timerId = setInterval(() => {
+        hoursAndMinutesInit(data.timezone);
+      }, 1000);
+
       stringForBackgroundresponse = data.currently.icon;
       // check background flag
       if (data.currently.icon !== backgroundInitFlag) {
@@ -90,7 +103,6 @@ function weatherInit() {
       backgroundInitFlag = data.currently.icon;
 
       const {
-        time,
         summary,
         icon,
         temperature,
@@ -100,10 +112,9 @@ function weatherInit() {
 
 
       // set DOM Elements from the API
-      weatherTime.textContent = formatTime(time);
-      weatherTimeFirst.textContent = formatTime(first.time);
-      weatherTimeSecond.textContent = formatTime(second.time);
-      weatherTimeThird.textContent = formatTime(third.time);
+      weatherTimeFirst.textContent = formatTime(first.time, data.timezone);
+      weatherTimeSecond.textContent = formatTime(second.time, data.timezone);
+      weatherTimeThird.textContent = formatTime(third.time, data.timezone);
 
       weatherDescreption.textContent = summary;
       weatherDescreptionFirst.textContent = first.summary;
@@ -180,8 +191,14 @@ if (navigator.geolocation) {
     latitude = position.coords.latitude;
 
     weatherInit();
-  });
+    nameOfCurrentLocationInit();
+    longitudeLatitudeInit();
+    mapInit();
+
+    document.querySelector('.banner').remove();
+  }, showErrorLocationAccess);
 }
+
 if (!navigator.geolocation) {
   window.addEventListener('load', () => {
     const urlWithCoordinatesForIpinfo = 'https://ipinfo.io/json?token=a3d4d591bf436c';
@@ -192,6 +209,9 @@ if (!navigator.geolocation) {
         const coordinates = data.loc.split(',');
         [latitude, longitude] = [...coordinates];
         weatherInit();
+        nameOfCurrentLocationInit();
+        longitudeLatitudeInit();
+        mapInit();
       });
   });
 }
@@ -244,6 +264,10 @@ function nameOfSearchLocationInit() {
   fetch(`https://api.opencagedata.com/geocode/v1/json?q=${string}&key=7bc6b65308044f5282bbe768d6bc320c&language=${language}&pretty=1`)
     .then((response) => response.json())
     .then((data) => {
+      setTimeout(() => {
+        searchInput.value = '';
+      }, 3000);
+
       longitude = data.results[0].geometry.lng;
       latitude = data.results[0].geometry.lat;
     })
@@ -265,7 +289,7 @@ searchButton.addEventListener('click', nameOfSearchLocationInit);
 
 
 // voice recognition
-const voice = document.getElementById('voice');
+const voice = document.querySelector('#voice');
 voice.addEventListener('click', () => {
   const recognition = new webkitSpeechRecognition();
   recognition.interimResults = false;

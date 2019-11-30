@@ -34,16 +34,21 @@ export default function backgroundInit() {
     }
 
     const informationForImage = `${stringForBackgroundresponse},${getHours()}`;
-    // const url = `https://api.unsplash.com/photos/random?orientation=${orientation}&per_page=1&query=${informationForImage}&client_id=97468db9ac3f46aba050edeb6ee94ee6c2fa732c4970c3d260cdbf50156a6f44`;
-    const url = `https://api.unsplash.com/photos/random?orientation=${orientation}&per_page=1&query=${informationForImage}&client_id=e2077ad31a806c894c460aec8f81bc2af4d09c4f8104ae3177bb809faf0eac17`;
+    const url = `https://api.unsplash.com/photos/random?orientation=${orientation}&per_page=1&query=${informationForImage}&client_id=97468db9ac3f46aba050edeb6ee94ee6c2fa732c4970c3d260cdbf50156a6f44`;
+    // const url = `https://api.unsplash.com/photos/random?orientation=${orientation}&per_page=1&query=${informationForImage}&client_id=e2077ad31a806c894c460aec8f81bc2af4d09c4f8104ae3177bb809faf0eac17`;
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      const urlImg = data.urls.small;
 
-    const response = await fetch(url);
-    const data = await response.json();
-    const urlImg = data.urls.small;
-
-    document.body.style.backgroundImage = `linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 1) ), url('${urlImg}')`;
-    document.body.style.backgroundRepeat = 'no-repeat';
-    document.body.style.backgroundSize = '100% 100vh';
+      document.body.style.backgroundImage = `linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 1) ), url('${urlImg}')`;
+      document.body.style.backgroundRepeat = 'no-repeat';
+      document.body.style.backgroundSize = '100% 100vh';
+    } catch (err) {
+      if (err.name === 'SyntaxError') {
+        document.body.style.backgroundImage = 'linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 1) )';
+      }
+    }
   }
   getLinkToImage();
 }

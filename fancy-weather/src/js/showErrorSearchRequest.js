@@ -15,7 +15,7 @@ export default function errorRequestInit() {
   <button class="remove-button">
   <i class="fa fa-times-circle" aria-hidden="true"></i>
   </button>
-  <p>${message}</p>
+  <p id='message'>${message}</p>
   </div>`;
   const pane = document.querySelector('.pane');
   document.querySelector('.remove-button').onclick = () => pane.remove();

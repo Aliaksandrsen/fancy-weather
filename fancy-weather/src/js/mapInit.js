@@ -14,7 +14,7 @@ function mapInit() {
       });
     });
 }
-mapInit();
+
 
 function degToDms(deg) {
   let d = Math.floor(deg);
@@ -56,7 +56,6 @@ function longitudeLatitudeInit() {
     longitudeWithMinute.textContent = `Даўгата: ${longitudeDms}`;
   }
 }
-window.addEventListener('load', longitudeLatitudeInit);
 
 
 export { mapInit, longitudeLatitudeInit };
