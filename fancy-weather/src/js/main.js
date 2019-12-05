@@ -5,7 +5,10 @@ import backgroundInit from './backgroundInit';
 import nameOfCurrentLocationInit from './nameOfCurrentLocationInit';
 import errorRequestInit from './showErrorSearchRequest';
 import showErrorLocationAccess from './showErrorLocationAccess';
-
+import formatTime from './formatTime';
+import fahrenheitToCelsius from './fahrenheitToCelsius';
+import getAverageTemperature from './getAverageTemperature';
+import iconNameDashToIconNameUpperCase from './iconNameDashToIconNameUpperCase';
 
 (function bannerInit() {
   const banner = document.createElement('div');
@@ -21,29 +24,10 @@ let lang = localStorage.getItem('lang') || 'english';
 let backgroundInitFlag;
 let timerId;
 
-// formatTime function
-function formatTime(t, timezone) {
-  const timeNow = new Date(t * 1000);
-
-  let language = 'en';
-  if (lang === 'english') language = 'en';
-  if (lang === 'russian') language = 'ru';
-  if (lang === 'belarusian') language = 'be';
-
-  const formatter = new Intl.DateTimeFormat(`${language}`, {
-    timeZone: `${timezone}`,
-    weekday: 'short',
-    year: '2-digit',
-    month: '2-digit',
-    day: 'numeric',
-  });
-
-  const timeNowGoodFormat = formatter.format(timeNow);
-  return timeNowGoodFormat;
-}
-
 
 function weatherInit() {
+  const DARKSKY_KEY = 'ef66892cfcce1b6b628ef03d7a7a6d3c';
+
   const weatherTimeFirst = document.querySelector('#weatherTimeFirst');
   const weatherTimeSecond = document.querySelector('#weatherTimeSecond');
   const weatherTimeThird = document.querySelector('#weatherTimeThird');
@@ -71,7 +55,8 @@ function weatherInit() {
 
   function setIcons(icon, iconID) {
     const skycons = new Skycons({ color: 'white' });
-    const currentIcon = icon.replace(/-/g, '_').toUpperCase();
+    const currentIcon = iconNameDashToIconNameUpperCase(icon);
+
     skycons.play();
     return skycons.set(iconID, Skycons[currentIcon]);
   }
@@ -82,8 +67,7 @@ function weatherInit() {
   if (lang === 'belarusian') language = 'be';
 
   const proxy = 'https://cors-anywhere.herokuapp.com/';
-  // const urlWithCoordinates = `${proxy}https://api.darksky.net/forecast/ef66892cfcce1b6b628ef03d7a7a6d3c/${latitude},${longitude}?lang=${language}`;
-  const urlWithCoordinates = `${proxy}https://api.darksky.net/forecast/07caf5f6c2905a352907b13fb5b347a0/${latitude},${longitude}?lang=${language}`;
+  const urlWithCoordinates = `${proxy}https://api.darksky.net/forecast/${DARKSKY_KEY}/${latitude},${longitude}?lang=${language}`;
 
   fetch(urlWithCoordinates)
     .then((response) => response.json())
@@ -121,19 +105,20 @@ function weatherInit() {
       weatherDescreptionSecond.textContent = second.summary;
       weatherDescreptionThird.textContent = third.summary;
 
+
       const temperature0 = Math.round(temperature);
-      const temperature1 = Math.round((first.temperatureMin + first.temperatureMax) / 2);
-      const temperature2 = Math.round((second.temperatureMin + second.temperatureMax) / 2);
-      const temperature3 = Math.round((third.temperatureMin + third.temperatureMax) / 2);
+      const temperature1 = getAverageTemperature(first.temperatureMin, first.temperatureMax);
+      const temperature2 = getAverageTemperature(second.temperatureMin, second.temperatureMax);
+      const temperature3 = getAverageTemperature(third.temperatureMin, third.temperatureMax);
 
       // Formula for celsius
-      const celsius = Math.round((temperature0 - 32) * (5 / 9));
-      degreeValue.textContent = Math.round(celsius);
-      const celsius1 = Math.round((temperature1 - 32) * (5 / 9));
+      const celsius = fahrenheitToCelsius(temperature0);
+      degreeValue.textContent = celsius;
+      const celsius1 = fahrenheitToCelsius(temperature1);
       degreeValueFirst.textContent = celsius1;
-      const celsius2 = Math.round((temperature2 - 32) * (5 / 9));
+      const celsius2 = fahrenheitToCelsius(temperature2);
       degreeValueSecond.textContent = celsius2;
-      const celsius3 = Math.round((temperature3 - 32) * (5 / 9));
+      const celsius3 = fahrenheitToCelsius(temperature3);
       degreeValueThird.textContent = celsius3;
 
       // Set Icons
@@ -201,13 +186,15 @@ if (navigator.geolocation) {
 
 if (!navigator.geolocation) {
   window.addEventListener('load', () => {
-    const urlWithCoordinatesForIpinfo = 'https://ipinfo.io/json?token=a3d4d591bf436c';
+    const IPINFO_KEY = 'a3d4d591bf436c';
+    const urlWithCoordinatesForIpinfo = `https://ipinfo.io/json?token=${IPINFO_KEY}`;
 
     fetch(urlWithCoordinatesForIpinfo)
       .then((response) => response.json())
       .then((data) => {
         const coordinates = data.loc.split(',');
         [latitude, longitude] = [...coordinates];
+
         weatherInit();
         nameOfCurrentLocationInit();
         longitudeLatitudeInit();
@@ -253,6 +240,7 @@ const searchInput = document.querySelector('#searchInput');
 
 // =================== search location
 function nameOfSearchLocationInit() {
+  const OPENCAGEDATA_KEY = '7bc6b65308044f5282bbe768d6bc320c';
   lang = localStorage.getItem('lang') || 'english';
   const string = searchInput.value;
 
@@ -261,7 +249,7 @@ function nameOfSearchLocationInit() {
   if (lang === 'russian') language = 'ru_Ru';
   if (lang === 'belarusian') language = 'be_BY';
 
-  fetch(`https://api.opencagedata.com/geocode/v1/json?q=${string}&key=7bc6b65308044f5282bbe768d6bc320c&language=${language}&pretty=1`)
+  fetch(`https://api.opencagedata.com/geocode/v1/json?q=${string}&key=${OPENCAGEDATA_KEY}&language=${language}&pretty=1`)
     .then((response) => response.json())
     .then((data) => {
       setTimeout(() => {
@@ -317,4 +305,5 @@ export {
   latitude,
   longitude,
   stringForBackgroundresponse,
+  formatTime,
 };

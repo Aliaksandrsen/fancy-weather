@@ -1,12 +1,13 @@
 module.exports = {
   "env": {
     "browser": true,
-    "es6": true
+    "es6": true,
+    "jest": true
   },
   "parser": "babel-eslint",
   "extends": [
     "airbnb-base",
-    // "prettier"
+    'plugin:jest/recommended'
   ],
   "globals": {
     "Atomics": "readonly",
@@ -21,5 +22,6 @@ module.exports = {
     'no-undef': 0,
     'new-cap': 0,
     'import/no-mutable-exports': 0,
+    'no-unused-vars': 0
   }
 }

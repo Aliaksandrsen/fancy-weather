@@ -27,11 +27,9 @@ function setDMode() {
 
 const config = {
   target: "web",
-  // entry: './src/js/index.js',
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    // filename: '[name].js'
     filename: 'bundle.js'
   },
   mode: setDMode(),
@@ -48,7 +46,7 @@ const config = {
       },
       {
         test: /\.js$/,
-        use: ['babel-loader'/* , 'eslint-loader' */],
+        use: ['babel-loader'],
         exclude: [
           /node_modules/
         ]
@@ -138,7 +136,6 @@ const config = {
 
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
-    // compress: true,
     open: 'chrome',
     port: 8081,
     stats: 'errors-only',
