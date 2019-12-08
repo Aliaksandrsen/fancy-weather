@@ -5,6 +5,7 @@ import fahrenheitToCelsius from '../src/js/fahrenheitToCelsius';
 import getAverageTemperature from '../src/js/getAverageTemperature';
 import chooseOrientation from '../src/js/chooseOrientation';
 import iconNameDashToIconNameUpperCase from '../src/js/iconNameDashToIconNameUpperCase';
+import { mphToMetresPerSecond, fractionToPercents } from '../src/js/windSpeedAndHumidityInit';
 
 describe('Degrees to D M S view function', () => {
   test('adds coordinates 29.1933854 to equal 29° 11" 36\'', () => {
@@ -12,6 +13,7 @@ describe('Degrees to D M S view function', () => {
     expect(degToDms(53.1645105)).toBe('53° 9" 52\'');
   });
 });
+
 
 describe('Time to localeString', () => {
   test('adds UTC miliseconds time 1575493200 to equal Thu, 12/5/19', () => {
@@ -30,6 +32,7 @@ describe('getStringSeasonAndHourForImageRequest', () => {
   });
 });
 
+
 describe('convert fahrenheit to celsius', () => {
   test('adds 35 fahrenheit to equal 2 celsius', () => {
     expect(fahrenheitToCelsius(35)).toBe(2);
@@ -37,6 +40,7 @@ describe('convert fahrenheit to celsius', () => {
     expect(fahrenheitToCelsius(47)).toBe(8);
   });
 });
+
 
 describe('getAverageTemperature', () => {
   test('adds 0 and 6 degrees to equal 3 degrees', () => {
@@ -46,6 +50,7 @@ describe('getAverageTemperature', () => {
   });
 });
 
+
 describe('get name of season', () => {
   test('adds 7 month to equal summer season', () => {
     expect(getSeason('12')).toBe('winter');
@@ -53,6 +58,7 @@ describe('get name of season', () => {
     expect(getSeason('7')).toBe('summer');
   });
 });
+
 
 describe('choose screen orientation', () => {
   test('adds 1024 pixels width and 768 pixels height to equal landscape', () => {
@@ -68,5 +74,23 @@ describe('tansform string to target form', () => {
     expect(iconNameDashToIconNameUpperCase('clear-day')).toBe('CLEAR_DAY');
     expect(iconNameDashToIconNameUpperCase('cloudy')).toBe('CLOUDY');
     expect(iconNameDashToIconNameUpperCase('partly-cloudy-day')).toBe('PARTLY_CLOUDY_DAY');
+  });
+});
+
+
+describe('speed translation', () => {
+  test('20 miles per hour to equal 9 meters per second.', () => {
+    expect(mphToMetresPerSecond(20)).toBe(9);
+    expect(mphToMetresPerSecond(5)).toBe(2);
+    expect(mphToMetresPerSecond(50)).toBe(22);
+  });
+});
+
+
+describe('fraction to percents', () => {
+  test('0.92 to equal 92%', () => {
+    expect(fractionToPercents(0.92)).toBe('92%');
+    expect(fractionToPercents(0.5)).toBe('50%');
+    expect(fractionToPercents(0.01)).toBe('1%');
   });
 });

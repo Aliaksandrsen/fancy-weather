@@ -9,6 +9,12 @@ import formatTime from './formatTime';
 import fahrenheitToCelsius from './fahrenheitToCelsius';
 import getAverageTemperature from './getAverageTemperature';
 import iconNameDashToIconNameUpperCase from './iconNameDashToIconNameUpperCase';
+import template from './pageTemplate';
+import { windSpeedAndHumidityInit } from './windSpeedAndHumidityInit';
+import apparentTemperatureLabelInit from './apparentTemperatureLabelInit';
+
+// template init
+document.querySelector('#wrapper').innerHTML = `${template}`;
 
 (function bannerInit() {
   const banner = document.createElement('div');
@@ -41,11 +47,13 @@ function weatherInit() {
   const degreeValueFirst = document.querySelector('#degreesValueFirst');
   const degreeValueSecond = document.querySelector('#degreesValueSecond');
   const degreeValueThird = document.querySelector('#degreesValueThird');
+  const degreeValueApparent = document.querySelector('#degreesValueApparent');
 
   const degreesSymbol = document.querySelector('#degreesSymbol');
   const degreesSymbolFirst = document.querySelector('#degreesSymbolFirst');
   const degreesSymbolSecond = document.querySelector('#degreesSymbolSecond');
   const degreesSymbolThird = document.querySelector('#degreesSymbolThird');
+  const degreesSymbolApparent = document.querySelector('#degreesSymbolApparent');
 
   const F = document.querySelector('#F');
   const C = document.querySelector('#C');
@@ -90,7 +98,12 @@ function weatherInit() {
         summary,
         icon,
         temperature,
+        windSpeed,
+        humidity,
+        apparentTemperature,
       } = data.currently;
+
+      windSpeedAndHumidityInit(windSpeed, humidity);
 
       const [, first, second, third] = data.daily.data;
 
@@ -110,6 +123,7 @@ function weatherInit() {
       const temperature1 = getAverageTemperature(first.temperatureMin, first.temperatureMax);
       const temperature2 = getAverageTemperature(second.temperatureMin, second.temperatureMax);
       const temperature3 = getAverageTemperature(third.temperatureMin, third.temperatureMax);
+      const temperatureApparent = Math.round(apparentTemperature);
 
       // Formula for celsius
       const celsius = fahrenheitToCelsius(temperature0);
@@ -120,6 +134,8 @@ function weatherInit() {
       degreeValueSecond.textContent = celsius2;
       const celsius3 = fahrenheitToCelsius(temperature3);
       degreeValueThird.textContent = celsius3;
+      const celsiusApparent = fahrenheitToCelsius(apparentTemperature);
+      degreeValueApparent.textContent = celsiusApparent;
 
       // Set Icons
       setIcons(icon, document.querySelector('#icon'));
@@ -135,11 +151,13 @@ function weatherInit() {
           degreesSymbolFirst.textContent = '°F';
           degreesSymbolSecond.textContent = '°F';
           degreesSymbolThird.textContent = '°F';
+          degreesSymbolApparent.textContent = '°F';
 
           degreeValue.textContent = temperature0;
           degreeValueFirst.textContent = temperature1;
           degreeValueSecond.textContent = temperature2;
           degreeValueThird.textContent = temperature3;
+          degreesValueApparent.textContent = temperatureApparent;
         }
       }
       F.addEventListener('click', () => {
@@ -154,11 +172,13 @@ function weatherInit() {
           degreesSymbolFirst.textContent = '°C';
           degreesSymbolSecond.textContent = '°C';
           degreesSymbolThird.textContent = '°C';
+          degreesSymbolApparent.textContent = '°C';
 
           degreeValue.textContent = celsius;
           degreeValueFirst.textContent = celsius1;
           degreeValueSecond.textContent = celsius2;
           degreeValueThird.textContent = celsius3;
+          degreesValueApparent.textContent = celsiusApparent;
         }
       }
       C.addEventListener('click', () => {
@@ -178,6 +198,7 @@ if (navigator.geolocation) {
     weatherInit();
     nameOfCurrentLocationInit();
     longitudeLatitudeInit();
+    apparentTemperatureLabelInit();
     mapInit();
 
     document.querySelector('.banner').remove();
@@ -198,6 +219,7 @@ if (!navigator.geolocation) {
         weatherInit();
         nameOfCurrentLocationInit();
         longitudeLatitudeInit();
+        apparentTemperatureLabelInit();
         mapInit();
       });
   });
@@ -211,6 +233,7 @@ function enInit() {
   weatherInit();
   nameOfCurrentLocationInit();
   longitudeLatitudeInit();
+  apparentTemperatureLabelInit();
 }
 en.addEventListener('click', enInit);
 
@@ -220,6 +243,7 @@ function ruInit() {
   weatherInit();
   nameOfCurrentLocationInit();
   longitudeLatitudeInit();
+  apparentTemperatureLabelInit();
 }
 ru.addEventListener('click', ruInit);
 
@@ -229,6 +253,7 @@ function beInit() {
   weatherInit();
   nameOfCurrentLocationInit();
   longitudeLatitudeInit();
+  apparentTemperatureLabelInit();
 }
 be.addEventListener('click', beInit);
 // ===================================
@@ -260,7 +285,7 @@ function nameOfSearchLocationInit() {
       latitude = data.results[0].geometry.lat;
     })
     .then(() => {
-      // после ответа сервера с погодой заново отрисовываем погоду
+      // after server weather response, we redraw the weather
       weatherInit();
       nameOfCurrentLocationInit();
       // remove old map
@@ -268,7 +293,7 @@ function nameOfSearchLocationInit() {
       mapInit();
       longitudeLatitudeInit();
     })
-    .catch(() => {
+    .catch((e) => {
       errorRequestInit();
     });
 }
@@ -299,6 +324,11 @@ voice.addEventListener('click', () => {
   recognition.addEventListener('end', nameOfSearchLocationInit);
 });
 // =================================
+
+
+document.querySelector('#loadBackground').addEventListener('click', () => {
+  backgroundInit();
+});
 
 
 export {

@@ -244,6 +244,17 @@ body {
     }
   }
 
+  &__parameters {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+
+    @media only screen and (max-width: 768px) {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+
   &__description {
     text-align: end;
 
@@ -274,9 +285,34 @@ body {
       }
     }
   }
+// ! ====================================================
+  &__parameters {
+    display: flex;
+    font-size: 2.5rem;
+  }
+
+  &__humidity-wind {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    font-size: 2.5rem;
+    margin: 3%;
+
+    @media only screen and (max-width: 500px) {
+      font-size: 2rem;
+    }
+
+    @media only screen and (max-width: 425px) {
+      font-size: 1.5rem;
+    }
+  }
+// ! ====================================================
 
   &__in-this-day {
     display: flex;
+    @media only screen and (max-width: 768px) {
+      justify-content: center;
+    }
   }
 
   &__next-days {
@@ -384,7 +420,6 @@ body {
   font-size: 1.5rem;
 }
 
-
 .pane {
   display: flex;
   align-items: center;
@@ -419,7 +454,6 @@ body {
   background: rgba(37, 37, 37, 0.95);
   border: solid 2px #aa0000;
 }
-
 
 .banner {
   position: absolute;

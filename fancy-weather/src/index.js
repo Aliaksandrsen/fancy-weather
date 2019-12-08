@@ -14,3 +14,6 @@ import './js/getStringSeasonAndHourForImageRequest';
 import './js/fahrenheitToCelsius';
 import './js/chooseOrientation';
 import './js/iconNameDashToIconNameUpperCase';
+import './js/pageTemplate';
+import './js/windSpeedAndHumidityInit';
+import './js/apparentTemperatureLabelInit';

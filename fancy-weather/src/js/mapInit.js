@@ -3,8 +3,9 @@ import { longitude, latitude } from './main';
 import degToDms from './degToDms';
 
 function mapInit() {
+  const YMAPS_KEY = 'e1d2fdeb-5a51-4d55-a96b-99d83404c3d3';
   ymaps
-    .load('https://api-maps.yandex.ru/2.1/?apikey=e1d2fdeb-5a51-4d55-a96b-99d83404c3d3&load=package.full&lang=en_RU')
+    .load(`https://api-maps.yandex.ru/2.1/?apikey=${YMAPS_KEY}&load=package.full&lang=en_RU`)
     .then((maps) => {
       const myMap = new maps.Map('map', {
         center: [latitude, longitude],
