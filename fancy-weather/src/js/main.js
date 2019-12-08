@@ -146,7 +146,8 @@ function weatherInit() {
 
       // Change temperature to Celsius/Farenheit
       function degreesInitF() {
-        if ((localStorage.getItem('symbolOfDegrees')) === '°F') {
+        const tempSymbol = localStorage.getItem('symbolOfDegrees') || '°C';
+        if (tempSymbol === '°F') {
           degreesSymbol.textContent = '°F';
           degreesSymbolFirst.textContent = '°F';
           degreesSymbolSecond.textContent = '°F';
@@ -167,7 +168,8 @@ function weatherInit() {
       degreesInitF();
 
       function degreesInitC() {
-        if ((localStorage.getItem('symbolOfDegrees')) === '°C') {
+        const tempSymbol = localStorage.getItem('symbolOfDegrees') || '°C';
+        if (tempSymbol === '°C') {
           degreesSymbol.textContent = '°C';
           degreesSymbolFirst.textContent = '°C';
           degreesSymbolSecond.textContent = '°C';
