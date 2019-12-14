@@ -11,7 +11,8 @@
     "build": "npm run clear -s && webpack --progress",
     "lint": "eslint ./**/*.js",
     "clear": "del-cli dist",
-    "test": "jest"
+    "test": "jest",
+    "testwatch": "jest --watchAll"
   },
   "author": "Aliaksandr",
   "license": "ISC",
@@ -19,6 +20,7 @@
     "@babel/core": "^7.6.0",
     "@babel/polyfill": "^7.7.0",
     "@babel/preset-env": "^7.6.0",
+    "@testing-library/jest-dom": "^4.2.4",
     "autoprefixer": "^9.6.1",
     "babel-eslint": "^10.0.3",
     "babel-jest": "^24.9.0",

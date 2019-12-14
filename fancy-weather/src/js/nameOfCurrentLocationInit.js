@@ -3,7 +3,7 @@ import { longitude, latitude } from './main';
 export default function nameOfCurrentLocationInit() {
   const country = document.querySelector('#country');
   const town = document.querySelector('#town');
-
+  const OPENCAGEDATA_KEY = '7bc6b65308044f5282bbe768d6bc320c';
   const lang = localStorage.getItem('lang') || 'english';
 
   let language = 'en';
@@ -11,7 +11,7 @@ export default function nameOfCurrentLocationInit() {
   if (lang === 'russian') language = 'ru';
   if (lang === 'belarusian') language = 'be';
 
-  fetch(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=7bc6b65308044f5282bbe768d6bc320c&language=${language}&pretty=1`)
+  fetch(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${OPENCAGEDATA_KEY}&language=${language}&pretty=1`)
     .then((response) => response.json())
     .then((data) => {
       const countryFromAPI = data.results[0].components.country || ' ';

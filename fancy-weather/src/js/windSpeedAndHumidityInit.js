@@ -7,15 +7,13 @@ function fractionToPercents(number) {
 }
 
 function windSpeedAndHumidityInit(windSpeedNumber, humidityNumber) {
-  const windSpeed = document.querySelector('#windSpeed ');
+  const windSpeed = document.querySelector('#windSpeed');
   const humidity = document.querySelector('#humidity');
 
   const lang = localStorage.getItem('lang') || 'english';
 
-  if (lang === 'english') {
-    windSpeed.textContent = `Wind speed: ${Math.round(windSpeedNumber)}mph`;
-    humidity.textContent = `Humidity: ${fractionToPercents(humidityNumber)}`;
-  }
+  windSpeed.textContent = `Wind speed: ${Math.round(windSpeedNumber)}mph`;
+  humidity.textContent = `Humidity: ${fractionToPercents(humidityNumber)}`;
   if (lang === 'russian') {
     windSpeed.textContent = `Скорость ветра: ${mphToMetresPerSecond(windSpeedNumber)}м/с`;
     humidity.textContent = `Влажность: ${fractionToPercents(humidityNumber)}`;
