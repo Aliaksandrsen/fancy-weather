@@ -30,13 +30,6 @@ let lang = localStorage.getItem('lang') || 'english';
 let backgroundInitFlag;
 let timerId;
 
-function setIcons(icon, iconID) {
-  const skycons = new Skycons({ color: 'white' });
-  const currentIcon = iconNameDashToIconNameUpperCase(icon);
-
-  skycons.play();
-  return skycons.set(iconID, Skycons[currentIcon]);
-}
 
 function weatherInit() {
   const DARKSKY_KEY = 'ef66892cfcce1b6b628ef03d7a7a6d3c';
@@ -307,6 +300,11 @@ function nameOfSearchLocationInit() {
     });
 }
 searchButton.addEventListener('click', nameOfSearchLocationInit);
+searchInput.addEventListener('keydown', (event) => {
+  if (event.code === 'Enter' || event.code === 'NumpadEnter') {
+    nameOfSearchLocationInit();
+  }
+});
 // =================================
 
 

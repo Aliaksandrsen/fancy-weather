@@ -24,7 +24,39 @@ export default function hoursAndMinutesInit(timezone) {
   });
 
   const timeNowGoodFormatHoursAndMinutes = formatter1.format(timeNow);
-  const timeNowGoodFormatweatherTime = formatter2.format(timeNow);
+  let timeNowGoodFormatweatherTime = formatter2.format(timeNow);
+
+  let arr;
+  if (language === 'be') {
+    arr = timeNowGoodFormatweatherTime.split(', ');
+    switch (arr[0]) {
+      case 'пн':
+        arr[0] = 'пн';
+        break;
+      case 'вт':
+        arr[0] = 'аў';
+        break;
+      case 'ср':
+        arr[0] = 'ср';
+        break;
+      case 'чт':
+        arr[0] = 'чц';
+        break;
+      case 'пт':
+        arr[0] = 'пт';
+        break;
+      case 'сб':
+        arr[0] = 'сб';
+        break;
+      case 'вс':
+        arr[0] = 'нд';
+        break;
+      default:
+        break;
+    }
+    timeNowGoodFormatweatherTime = arr.join(', ');
+  }
+
   weatherHoursAndMinutes.textContent = `${timeNowGoodFormatHoursAndMinutes}`;
   weatherTime.textContent = `${timeNowGoodFormatweatherTime}`;
 }
