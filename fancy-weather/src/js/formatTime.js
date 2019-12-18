@@ -9,8 +9,7 @@ export default function formatTime(t, timezone) {
 
   const formatter = new Intl.DateTimeFormat(`${language}`, {
     timeZone: `${timezone}`,
-    weekday: 'short',
-    year: '2-digit',
+    weekday: 'long',
     month: '2-digit',
     day: 'numeric',
   });
@@ -20,26 +19,26 @@ export default function formatTime(t, timezone) {
   if (language === 'be') {
     arr = timeNowGoodFormat.split(', ');
     switch (arr[0]) {
-      case 'пн':
-        arr[0] = 'пн';
+      case 'понедельник':
+        arr[0] = 'панядзелак';
         break;
-      case 'вт':
-        arr[0] = 'аў';
+      case 'вторник':
+        arr[0] = 'аўторак';
         break;
-      case 'ср':
-        arr[0] = 'ср';
+      case 'среда':
+        arr[0] = 'среда';
         break;
-      case 'чт':
-        arr[0] = 'чц';
+      case 'четверг':
+        arr[0] = 'чацвер';
         break;
-      case 'пт':
-        arr[0] = 'пт';
+      case 'пятница':
+        arr[0] = 'пятніца';
         break;
-      case 'сб':
-        arr[0] = 'сб';
+      case 'суббота':
+        arr[0] = 'субота';
         break;
-      case 'вс':
-        arr[0] = 'нд';
+      case 'воскресенье':
+        arr[0] = 'нядзеля';
         break;
       default:
         break;
