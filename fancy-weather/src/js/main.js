@@ -276,28 +276,30 @@ function nameOfSearchLocationInit() {
   if (lang === 'russian') language = 'ru_Ru';
   if (lang === 'belarusian') language = 'be_BY';
 
-  fetch(`https://api.opencagedata.com/geocode/v1/json?q=${string}&key=${OPENCAGEDATA_KEY}&language=${language}&pretty=1`)
-    .then((response) => response.json())
-    .then((data) => {
-      setTimeout(() => {
-        searchInput.value = '';
-      }, 3000);
+  if (searchInput.value.length > 1) {
+    fetch(`https://api.opencagedata.com/geocode/v1/json?q=${string}&key=${OPENCAGEDATA_KEY}&language=${language}&pretty=1`)
+      .then((response) => response.json())
+      .then((data) => {
+        setTimeout(() => {
+          searchInput.value = '';
+        }, 3000);
 
-      longitude = data.results[0].geometry.lng;
-      latitude = data.results[0].geometry.lat;
-    })
-    .then(() => {
-      // after server weather response, we redraw the weather
-      weatherInit();
-      nameOfCurrentLocationInit();
-      // remove old map
-      document.querySelector('.ymaps-2-1-75-map').remove();
-      mapInit();
-      longitudeLatitudeInit();
-    })
-    .catch(() => {
-      errorRequestInit();
-    });
+        longitude = data.results[0].geometry.lng;
+        latitude = data.results[0].geometry.lat;
+      })
+      .then(() => {
+        // after server weather response, we redraw the weather
+        weatherInit();
+        nameOfCurrentLocationInit();
+        // remove old map
+        document.querySelector('.ymaps-2-1-75-map').remove();
+        mapInit();
+        longitudeLatitudeInit();
+      })
+      .catch(() => {
+        errorRequestInit();
+      });
+  }
 }
 searchButton.addEventListener('click', nameOfSearchLocationInit);
 searchInput.addEventListener('keydown', (event) => {
