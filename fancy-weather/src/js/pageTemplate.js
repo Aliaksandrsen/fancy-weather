@@ -39,7 +39,7 @@ const template = `
 
               <p class="weather__description weather__description_big" id="weatherDescreption"></p>
             </div>
-            <canvas id="icon" class="icon_big" width="196" height="196"></canvas>
+            <canvas id="icon" class="icon_big" width="165" height="165"></canvas>
           </div>
 
 
