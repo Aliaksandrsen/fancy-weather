@@ -1,20 +1,20 @@
 {
-  "name": "webpack",
+  "name": "fancy-weather",
   "version": "1.0.0",
-  "description": "WebPack: HTML, CSS, SCSS, JS, Img, Fonts",
-  "main": "",
+  "description": "",
+  "main": "index.js",
   "browserslist": [
     "> 0.25%, not dead"
   ],
   "scripts": {
-    "dev": "webpack-dev-server --history-api-fallback --inline --progress --open",
+    "start": "webpack-dev-server --history-api-fallback --inline --progress --open",
     "build": "npm run clear -s && webpack --progress",
     "lint": "eslint ./**/*.js",
     "clear": "del-cli dist",
     "test": "jest",
     "testwatch": "jest --watchAll"
   },
-  "author": "Aliaksandr",
+  "author": "Aliaksandr Senkevich",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.6.0",

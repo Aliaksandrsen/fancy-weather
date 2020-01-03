@@ -16,10 +16,10 @@ describe('Degrees to D M S view function', () => {
 
 
 describe('Time to localeString', () => {
-  test('adds UTC miliseconds time 1575493200 to equal Thu, 12/5/19', () => {
-    expect(formatTime(1575493200, 'Europe/Minsk')).toBe('Thu, 12/5/19');
-    expect(formatTime(1575590400, 'Europe/London')).toBe('Fri, 12/6/19');
-    expect(formatTime(1575673200, 'Europe/Berlin')).toBe('Sat, 12/7/19');
+  test('adds UTC miliseconds time 1575493200 to equal Thursday, 12/5', () => {
+    expect(formatTime(1575493200, 'Europe/Minsk')).toBe('Thursday, 12/5');
+    expect(formatTime(1575590400, 'Europe/London')).toBe('Friday, 12/6');
+    expect(formatTime(1575673200, 'Europe/Berlin')).toBe('Saturday, 12/7');
   });
 });
 
