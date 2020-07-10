@@ -1,6 +1,6 @@
 # Fancy weather
 - Responsive design
-- ES 2015 features
+- ES 2018 features
 - Webpack
 - Babel
 - ESlint (config-airbnb-base)
